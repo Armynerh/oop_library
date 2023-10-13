@@ -1,20 +1,33 @@
 require_relative 'nameable'
 require_relative 'rental'
 
-class Person < Nameable
-  attr_reader :id, :rentals
-  attr_accessor :name, :age
-
-  def initialize(id, age, name: 'Unknown', parent_permission: true, nameable: nil)
-    super()
-    @id = id
+class Person
+  attr_accessor :name, :age, :rentals
+  
+  def initialize(age, name = 'Unknown', parent_permission = true)
+    @id = generate_id
     @name = name
     @age = age
-    @nameable = nameable
     @parent_permission = parent_permission
+    @rentals = []
   end
-
+  
+  def add_rental(book, date)
+    Rental.new(date, book, self)
+  end
+  
   private
+
+    def generate_unique_id
+    used_ids = Set.new 
+    loop do
+      new_id = rand(1000..9999)
+      unless used_ids.include?(new_id)
+        used_ids.add(new_id)
+        return new_id
+      end
+    end
+  end
 
   def of_age
     age >= 18
@@ -28,7 +41,5 @@ class Person < Nameable
     name
   end
 
-  def add_rental(book, date)
-    Rental.new(date, book, self)
-  end
+
 end
