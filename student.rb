@@ -1,35 +1,20 @@
-require_relative 'nameable'
-require_relative 'rental'
+require_relative 'person'
+require_relative 'classroom'
 
-# create person class
-class Person < Nameable
-  attr_reader :id, :rentals
-  attr_accessor :name, :age
+class Student < Person
+  attr_accessor :classroom
 
-  def initialize(id, age, name: 'Unknown', parent_permission: true, nameable: nil)
-    super()
-    @id = id
-    @name = name
-    @age = age
-    @nameable = nameable
-    @parent_permission = parent_permission
+  def initialize(age, name: 'Unknown', parent_permission: true)
+    super(age, name, parent_permission)
+    @classroom = nil 
   end
 
-  private
-
-  def of_age
-    age >= 18
+  def play_hooky
+    '¯\\(ツ)/¯'
   end
 
-  def can_use_services
-    age >= 18 || parent_permission == true
-  end
-
-  def correct_name
-    name
-  end
-
-  def add_rental(book, date)
-    Rental.new(date, book, self)
+  def join_classroom(classroom)
+    @classroom = classroom
+    classroom.add_student(self)
   end
 end
