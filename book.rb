@@ -1,14 +1,10 @@
-require_relative 'rental'
-
-# cleate book class
 class Book
-  attr_accessor :title, :auther
-  attr_reader :rental
+  attr_accessor :title, :author, :rentals
 
-  def initialize(title, auther)
+  def initialize(title, author)
     @title = title
-    @auther = auther
-    @rental = []
+    @author = author
+    @rentals = [] # If you choose to proceed with managing rentals
   end
 
   def add_rental(person, date)
