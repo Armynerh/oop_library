@@ -1,10 +1,12 @@
 require_relative 'nameable'
 require_relative 'rental'
 
-class Person
-  attr_accessor :name, :age, :rentals
+class Person < Nameable
+  attr_reader :id, :parent_permission, :rentals
+  attr_accessor :name, :age
 
-  def initialize(age, name = 'Unknown', parent_permission: true)
+  def initialize(age, parent_permission, name = 'Unknown')
+    super()
     @id = generate_id
     @name = name
     @age = age
@@ -18,7 +20,7 @@ class Person
 
   private
 
-  def generate_unique_id
+  def generate_id
     used_ids = Set.new
     loop do
       new_id = rand(1000..9999)
