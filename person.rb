@@ -1,5 +1,6 @@
 require_relative 'nameable'
 require_relative 'rental'
+require 'set'
 
 class Person < Nameable
   attr_reader :id, :parent_permission, :rentals
